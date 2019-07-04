@@ -1,6 +1,6 @@
 c:
 	clear
-	g++ *.cc -lglut -lGL
+	g++ *.cc -lGL -lglut
 r:
 	clear
 	./a.out

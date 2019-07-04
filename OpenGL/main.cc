@@ -1,22 +1,46 @@
 #include <GL/glut.h>
 
+/*
+ * -lGL
+ *		glFlush
+ * 		glClear
+ *		glRotatef
+ *		GL_COLOR_BUFFER_BIT
+ * -lglut
+ *		glutInit
+ *		glutInitDisplayMode
+ * 		glutInitWindowPosition
+ *		glutInitWindowSize
+ *		glutDisplayFunc
+ *		glutPostRedisplay
+ *		glutMainLoop
+ *		glutWireTeapot
+ *		glutSwapBuffers
+ *		glutIdleFunc
+ *		GLUT_DOUBLE
+*/
+
 void render()
 {
 	// Clear with black color
 	glClear(GL_COLOR_BUFFER_BIT);
+	// Rotate Z axis
 	glRotatef(
 		0.1,	// angle
 		0, 0, 1 // x,y,z
 	);
-	// Display wire tea-pot
+	// Request wire tea-pot image to display
 	glutWireTeapot(1);
-	// Forces exec of OpenGL func in finite time 
-	glFlush();
+	// glFlush: Forces exec of OpenGL func in finite time 
+	// glFlush()
+	// glutSwapBuffers() replace glFlush()
+	glutSwapBuffers();
 }
 
 void idle()
 {
 	// Marks the current window as needing to be redisplayed
+	// or not rotate wire tea-pot
 	glutPostRedisplay();
 }
 
@@ -26,6 +50,8 @@ int main(int argc, char *argv[])
 		&argc,
 		argv
 	);
+	// Double buffer: visible to display, invisible to prepair
+	glutInitDisplayMode(GLUT_DOUBLE);
 	// Init window position
 	glutInitWindowPosition(0,0);
 	// Init window size
@@ -34,6 +60,7 @@ int main(int argc, char *argv[])
 	glutCreateWindow("First");
 	// Callback render
 	glutDisplayFunc(render);
+	// When idle, call idle func
 	glutIdleFunc(idle);
 	// Loop for render, event
 	glutMainLoop();
