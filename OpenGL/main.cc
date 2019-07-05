@@ -1,10 +1,14 @@
 #include <GL/glut.h>
 
+int windowWidth = 400;
+int windowHeight = 400;
+
 /*
  * -lGL
  *		glFlush
  * 		glClear
  *		glRotatef
+ *		glViewport
  *		GL_COLOR_BUFFER_BIT
  * -lglut
  *		glutInit
@@ -17,6 +21,7 @@
  *		glutWireTeapot
  *		glutSwapBuffers
  *		glutIdleFunc
+ *		glutReshapeFunc
  *		GLUT_DOUBLE
 */
 
@@ -44,6 +49,18 @@ void idle()
 	glutPostRedisplay();
 }
 
+void reshape(int width, int height)
+{
+	// resize window 
+	glViewport(
+		0, 0, 
+		width, height
+	);
+	windowWidth = width;
+	windowHeight = height;
+}
+
+
 int main(int argc, char *argv[])
 {
 	glutInit(
@@ -62,6 +79,8 @@ int main(int argc, char *argv[])
 	glutDisplayFunc(render);
 	// When idle, call idle func
 	glutIdleFunc(idle);
+	// Call when resize window
+	glutReshapeFunc(reshape);
 	// Loop for render, event
 	glutMainLoop();
 	return 0;
